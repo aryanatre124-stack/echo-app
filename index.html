@@ -2,84 +2,189 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Echo - Social</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #000; color: white; margin: 0; font-family: sans-serif; }
-        .screen { display: none; min-height: 100vh; padding-bottom: 70px; }
+        body { background-color: #000; color: white; margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; overflow-x: hidden; }
+        .screen { display: none; min-height: 100vh; padding-bottom: 80px; transition: all 0.3s ease; }
         .active { display: block; }
-        .nav-bar { position: fixed; bottom: 0; width: 100%; background: #000; border-top: 0.5px solid #262626; display: flex; justify-content: space-around; padding: 15px 0; z-index: 100; }
-        .insta-border { border: 1px solid #262626; border-radius: 8px; margin-bottom: 15px; }
+        .nav-bar { position: fixed; bottom: 0; width: 100%; background: #000; border-top: 0.5px solid #262626; display: flex; justify-content: space-around; padding: 12px 0; z-index: 1000; }
+        .story-ring { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); padding: 2px; border-radius: 50%; }
+        .post-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; background: #121212; }
+        ::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body>
+
     <div id="home" class="screen active">
-        <div class="p-4 flex justify-between items-center border-b border-gray-800 sticky top-0 bg-black z-50">
-            <h1 class="text-2xl font-bold italic tracking-tighter">ECHO</h1>
-            <i class="far fa-paper-plane text-xl" onclick="showScreen('dm')"></i>
+        <header class="p-4 flex justify-between items-center sticky top-0 bg-black z-50 border-b border-gray-900">
+            <h1 class="text-2xl font-bold italic tracking-tighter text-white">ECHO</h1>
+            <div class="flex gap-6 items-center">
+                <i class="far fa-heart text-xl"></i>
+                <i class="far fa-paper-plane text-xl cursor-pointer" onclick="showScreen('dm')"></i>
+            </div>
+        </header>
+
+        <div class="flex gap-4 p-4 overflow-x-auto border-b border-gray-900">
+            <div class="flex-shrink-0 text-center">
+                <div class="w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center border border-gray-700 relative">
+                    <span class="text-2xl text-gray-500">+</span>
+                </div>
+                <p class="text-[10px] mt-1 text-gray-400">Your Story</p>
+            </div>
+            <div class="flex-shrink-0 text-center">
+                <div class="story-ring"><div class="w-[60px] h-[60px] bg-black rounded-full border-2 border-black overflow-hidden"><img src="https://i.pravatar.cc/100?u=9" alt=""></div></div>
+                <p class="text-[10px] mt-1">rahul_vibe</p>
+            </div>
         </div>
-        <div class="p-2">
-            <div class="insta-border overflow-hidden">
-                <div class="p-3 flex items-center gap-2">
-                    <div class="w-8 h-8 bg-gradient-to-tr from-yellow-400 to-fuchsia-600 rounded-full"></div>
-                    <span class="font-bold text-xs">echo_creators</span>
+
+        <div id="feed-container">
+            <div class="mb-4">
+                <div class="p-3 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-500 to-purple-500 p-0.5"><div class="w-full h-full bg-black rounded-full"></div></div>
+                        <span class="font-semibold text-xs text-white">echo_official</span>
+                    </div>
+                    <i class="fas fa-ellipsis-h text-gray-500 text-xs"></i>
                 </div>
-                <div class="h-96 bg-gray-900 flex items-center justify-center">
-                    <i class="far fa-image text-4xl text-gray-700"></i>
-                </div>
-                <div class="p-3 flex gap-4 text-xl">
-                    <i class="far fa-heart hover:text-red-500"></i>
-                    <i class="far fa-comment"></i>
+                <div class="post-img flex items-center justify-center text-gray-700 italic">Welcome to Echo! 🚀</div>
+                <div class="p-3">
+                    <div class="flex gap-4 text-xl mb-2">
+                        <i class="far fa-heart hover:text-red-500 transition cursor-pointer" onclick="this.classList.toggle('fas'); this.classList.toggle('far'); this.classList.toggle('text-red-500')"></i>
+                        <i class="far fa-comment"></i>
+                        <i class="far fa-paper-plane"></i>
+                    </div>
+                    <p class="text-sm font-bold">1,204 likes</p>
+                    <p class="text-sm"><span class="font-bold">echo_official</span> Creating something big! 🔥</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="dm" class="screen">
-        <div class="p-4 flex items-center gap-4 border-b border-gray-800">
-            <i class="fas fa-arrow-left" onclick="showScreen('home')"></i>
-            <h1 class="text-xl font-bold">Direct</h1>
-        </div>
+    <div id="search" class="screen">
         <div class="p-4">
-            <div class="flex items-center gap-4 mb-6">
-                <div class="relative">
-                    <div class="w-14 h-14 bg-gray-800 rounded-full border border-gray-700"></div>
-                    <div class="absolute -top-2 -right-2 bg-white text-black text-[10px] px-2 py-1 rounded-full font-bold">🎵 Hindi...</div>
-                </div>
-                <p class="text-sm text-gray-400">Your note</p>
+            <div class="bg-gray-900 flex items-center p-2 rounded-lg gap-3">
+                <i class="fas fa-search text-gray-500"></i>
+                <input type="text" placeholder="Search" class="bg-transparent border-none outline-none text-sm w-full">
             </div>
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 bg-blue-600 rounded-full"></div>
-                <div><p class="font-bold">Bhai</p><p class="text-xs text-gray-500">GitHub par app live ho gaya!</p></div>
+            <div class="grid grid-cols-3 gap-1 mt-4">
+                <div class="aspect-square bg-gray-900"></div><div class="aspect-square bg-gray-800"></div><div class="aspect-square bg-gray-900"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="add" class="screen">
+        <div class="p-4 flex justify-between border-b border-gray-900">
+            <span class="font-bold cursor-pointer" onclick="showScreen('home')">Cancel</span>
+            <span class="text-blue-500 font-bold cursor-pointer" onclick="handlePost()">Share</span>
+        </div>
+        <div class="p-8 text-center">
+            <input type="file" id="fileInput" class="hidden" accept="image/*" onchange="previewImage(event)">
+            <label for="fileInput" class="bg-blue-600 px-6 py-2 rounded-lg font-bold cursor-pointer">Select from Gallery</label>
+            <div id="preview" class="mt-8 max-h-64 overflow-hidden rounded-lg"></div>
+        </div>
+    </div>
+
+    <div id="dm" class="screen">
+        <header class="p-4 flex items-center gap-6 border-b border-gray-900">
+            <i class="fas fa-arrow-left text-xl cursor-pointer" onclick="showScreen('home')"></i>
+            <h1 class="text-xl font-bold">aryanatre124</h1>
+        </header>
+        <div class="p-4">
+            <div class="flex gap-4 mb-8 overflow-x-auto">
+                <div class="flex-shrink-0 text-center relative">
+                    <div class="absolute -top-1 -right-1 bg-white text-black text-[9px] px-2 py-0.5 rounded-full shadow-lg">🎵 Hindi...</div>
+                    <div class="w-16 h-16 rounded-full bg-gray-800 border border-gray-700"></div>
+                    <p class="text-xs mt-1 text-gray-500">Your note</p>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-14 h-14 bg-blue-500 rounded-full"></div>
+                        <div><p class="font-semibold">Team Echo</p><p class="text-xs text-gray-500">Your app is live! 🚀</p></div>
+                    </div>
+                    <i class="far fa-camera text-xl text-gray-500"></i>
+                </div>
             </div>
         </div>
     </div>
 
     <div id="profile" class="screen">
-        <div class="p-8 text-center">
-            <div class="w-24 h-24 bg-gray-800 rounded-full mx-auto border-2 border-gray-700 flex items-center justify-center">
-                <i class="fas fa-user text-4xl text-gray-600"></i>
+        <header class="p-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold">aryanatre124</h1>
+            <i class="fas fa-plus-square text-xl"></i>
+        </header>
+        <div class="p-4">
+            <div class="flex items-center justify-between mb-6">
+                <div class="w-20 h-20 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center text-3xl">👤</div>
+                <div class="flex gap-6 text-center">
+                    <div><p class="font-bold">0</p><p class="text-xs text-gray-400">Posts</p></div>
+                    <div><p class="font-bold">152</p><p class="text-xs text-gray-400">Followers</p></div>
+                    <div><p class="font-bold">180</p><p class="text-xs text-gray-400">Following</p></div>
+                </div>
             </div>
-            <h2 class="text-xl font-bold mt-4">aryanatre124</h2>
-            <p class="text-gray-400 text-sm mt-1">Echo Developer 🚀</p>
-            <button class="mt-6 w-full bg-[#363636] py-2 rounded-lg font-bold text-sm">Edit Profile</button>
+            <p class="text-sm font-bold">Aryan Atre</p>
+            <p class="text-sm text-gray-400">Echo Developer | 8GB RAM Warrior 🚀</p>
+            <div class="flex gap-2 mt-4">
+                <button class="flex-1 bg-gray-900 py-1.5 rounded-md text-xs font-bold">Edit Profile</button>
+                <button class="flex-1 bg-gray-900 py-1.5 rounded-md text-xs font-bold">Share Profile</button>
+            </div>
         </div>
     </div>
 
     <div class="nav-bar">
-        <i class="fas fa-home text-xl" onclick="showScreen('home')"></i>
-        <i class="fas fa-search text-xl"></i>
-        <i class="fas fa-plus-square text-xl"></i>
-        <i class="fas fa-user text-xl" onclick="showScreen('profile')"></i>
+        <i class="fas fa-home text-xl cursor-pointer" onclick="showScreen('home')"></i>
+        <i class="fas fa-search text-xl cursor-pointer" onclick="showScreen('search')"></i>
+        <i class="far fa-plus-square text-xl cursor-pointer" onclick="showScreen('add')"></i>
+        <i class="fas fa-play-circle text-xl cursor-pointer"></i>
+        <i class="fas fa-user-circle text-xl cursor-pointer" onclick="showScreen('profile')"></i>
     </div>
 
     <script>
         function showScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        let selectedImage = "";
+
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const preview = document.getElementById('preview');
+                preview.innerHTML = `<img src="${reader.result}" class="rounded-lg shadow-xl mx-auto">`;
+                selectedImage = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function handlePost() {
+            if(!selectedImage) return alert("Select an image first!");
+            const feed = document.getElementById('feed-container');
+            const newPost = `
+                <div class="mb-4">
+                    <div class="p-3 flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-blue-500"></div>
+                        <span class="font-semibold text-xs">aryanatre124</span>
+                    </div>
+                    <img src="${selectedImage}" class="post-img">
+                    <div class="p-3">
+                        <div class="flex gap-4 text-xl mb-2"><i class="far fa-heart"></i><i class="far fa-comment"></i></div>
+                        <p class="text-sm font-bold">1 like</p>
+                        <p class="text-sm"><span class="font-bold">aryanatre124</span> Posted via Echo 🚀</p>
+                    </div>
+                </div>
+            `;
+            feed.insertAdjacentHTML('afterbegin', newPost);
+            showScreen('home');
+            document.getElementById('preview').innerHTML = "";
+            selectedImage = "";
         }
     </script>
 </body>
-</html>
+    </html>
+    
